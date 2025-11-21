@@ -1,0 +1,6 @@
+{
+"watch": ["server.js","routes","lib"],
+"ignore": ["node_modules",".git","*.log",".DS_Store"],
+"ext": "js,mjs,json",
+"env": { "PORT": "5001" }
+}
