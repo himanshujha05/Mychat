@@ -7,8 +7,8 @@ const ProfilePage = () => {
   const {authuser, updateProfile} = useContext(AuthContext)
   const [selectedImg, setSelectedImg] = useState(null)
   const navigate= useNavigate( );
-  const [name, setName] = useState("Himanshu Jha")
-  const [bio, setBio] = useState("Hi Everyone, I am using quickChat")
+  const [name, setName] = useState(authUser.fullName)
+  const [bio, setBio] = useState(authUser.bio)
   const handleSubmit = async (e)=>{
     e.preventDefault();
     if(!selectedImg){
@@ -53,3 +53,4 @@ const ProfilePage = () => {
 }
 
 export default ProfilePage
+
