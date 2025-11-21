@@ -1,22 +1,29 @@
-# OS
-.DS_Store
-
-# IDEs
-.vscode/
-.idea/
-.vs/
-
-# Node / JS
+# Node
 node_modules/
-dist/
-build/
-
-# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
+pnpm-lock.yaml
+*.log
 
-# Misc
-*.user
-*.suo
+# Vite / build
+dist/
+.vite/
+*.local
+
+# Env / secrets
+.env
+.env.*.local
+*.pem
+*.key
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Coverage / misc
+coverage/
+.tmp/
