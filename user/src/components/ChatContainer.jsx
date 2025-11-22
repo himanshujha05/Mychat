@@ -1,11 +1,16 @@
- import React, { useEffect } from 'react'
+ import React, { use, useEffect } from 'react'
 import assets, { messagesDummyData } from '../assets/assets'
 import { useRef } from 'react'
 import { formatMessageTime } from '../library/utils'
+import { AuthContext } from '../../context/AuthContext'
  
- const ChatContainer = ({selectedUser, setSelectedUser}) => {
+ const ChatContainer = () => {
+    const { messages , selectedUser, setSelectedUser,sendMessages, getMessages} = React.useContext (ChatContext);
+    const {authUser,onlineUser} = React.useContext (AuthContext);
+
 
      const scrollEnd = useRef()
+     const [input , setInput] = useState ('');
 
      useEffect(()=>{
            if(scrollEnd.current){
@@ -16,7 +21,7 @@ import { formatMessageTime } from '../library/utils'
 
    return selectedUser ? (
      <div className='h-full overflow-scroll relative backdrop-blur-lg'>
-      {/*----header*/}
+      {/*----header------*/}
       <div className='flex items-center gap-3 py-3 mx-4 border-b border-stone-500'>
         
       <img src={assets.profile_martin} alt="" className = "w-8 rounded-full"/>
