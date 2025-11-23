@@ -10,8 +10,8 @@ messageRouter.get("/users", protectRoute, getUsersForSidebar);
 messageRouter.get("/:id", protectRoute, getMessages);
 
 //route to mark messages as seen
-messageRouter.put("mark/:id", protectRoute, markMessagesAsSeen);
+messageRouter.put("/mark/:id", protectRoute, markMessagesAsSeen);
 
 messageRouter.post("/send/:id", protectRoute,sendMessage);
 
-export default messageRouter;
+export default messageRouter; 
