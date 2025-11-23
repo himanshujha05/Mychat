@@ -52,5 +52,5 @@ async function start() {
     console.log(`[LISTEN] http://localhost:${PORT}`);
   });
 }
-
+export default Server;
 start();
