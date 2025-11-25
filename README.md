@@ -15,3 +15,4 @@ cd user && npm i && npm run dev
 ```bash
 npm run build
 ```
+# HimanChat - Real-time Messenger App
