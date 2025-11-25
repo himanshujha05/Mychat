@@ -37,7 +37,8 @@ export const getUsersForSidebar = async(req, res) => {
                 {senderId: myId, receiverId: selectedUserId},
                 {senderId: selectedUserId, receiverId: myId},
             ]
-        }) 
+        }).sort({ createdAt: 1 }); // Sort by creation time ascending
+        
         await Message.updateMany(
             {senderId: selectedUserId, receiverId: myId},{seen: true});
             res.json({success: true, messages});
@@ -51,7 +52,7 @@ export const getUsersForSidebar = async(req, res) => {
     //api to mark messases as seen
     export const markMessagesAsSeen = async(req, res) => {
         try{
-            const {d} = req.params;
+            const {id} = req.params;
             await Message.findByIdAndUpdate(id, {seen: true});
             res.json({success: true, message:"Messages marked as seen"});
         } catch(error){

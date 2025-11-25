@@ -25,6 +25,22 @@ io.on("connection", (socket) => {
   if (userId) {
     userSocketMap[userId] = socket.id;
     io.emit("getOnlineusers", Object.keys(userSocketMap));
+    
+    // Typing indicator
+    socket.on("typing", ({ receiverId }) => {
+      const receiverSocketId = userSocketMap[receiverId];
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit("user-typing", { userId });
+      }
+    });
+    
+    socket.on("stop-typing", ({ receiverId }) => {
+      const receiverSocketId = userSocketMap[receiverId];
+      if (receiverSocketId) {
+        io.to(receiverSocketId).emit("user-stop-typing", { userId });
+      }
+    });
+    
     socket.on("disconnect", () => {
       delete userSocketMap[userId];
       io.emit("getOnlineusers", Object.keys(userSocketMap));
@@ -52,5 +68,4 @@ async function start() {
     console.log(`[LISTEN] http://localhost:${PORT}`);
   });
 }
-
 start();

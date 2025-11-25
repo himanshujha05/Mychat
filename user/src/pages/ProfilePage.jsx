@@ -1,14 +1,14 @@
-import React, { use, useContext, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import assets from '../assets/assets';
 import { AuthContext } from '../../context/AuthContext';
 
 const ProfilePage = () => {
-  const {authuser, updateProfile} = useContext(AuthContext)
+  const {authUser, updateProfile} = useContext(AuthContext)
   const [selectedImg, setSelectedImg] = useState(null)
-  const navigate= useNavigate( );
-  const [name, setName] = useState(authUser.fullName)
-  const [bio, setBio] = useState(authUser.bio)
+  const navigate = useNavigate();
+  const [name, setName] = useState(authUser?.fullName || '')
+  const [bio, setBio] = useState(authUser?.bio || '')
   const handleSubmit = async (e)=>{
     e.preventDefault();
     if(!selectedImg){
@@ -20,7 +20,7 @@ const ProfilePage = () => {
     reader.readAsDataURL(selectedImg)
     reader.onload =async ()=>{
       const base64Image =reader.result;
-      await updateProfile({profilePic:base64Image,fullname:name, bio});
+      await updateProfile({profilePic:base64Image, fullName:name, bio});
       navigate('/');
   }
 }
@@ -45,7 +45,7 @@ const ProfilePage = () => {
           border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500"rows={4}></textarea>
           <button type= "submit" className= "bg-gradient-to-r from-purple-400  to-violet-600 text-white p-2 rounded-full text-lg cursor-pointer">Save</button>
         </form>
-        <img className={`max-w-44 aspect-square rounded-full mx-10 max-sm:mt-10 ${selectedImg && 'rounded-full'}`} src={authUser || assets.logo_icon}alt="" />
+        <img className='max-w-44 aspect-square rounded-full mx-10 max-sm:mt-10 object-cover' src={selectedImg ? URL.createObjectURL(selectedImg) : (authUser?.profilePic || assets.logo_icon)} alt="" />
       </div>
      
     </div>

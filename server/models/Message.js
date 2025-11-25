@@ -5,13 +5,13 @@ const { Schema } = mongoose;
 
 const messageSchema = new Schema(
   {
-    sender: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    receiver: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    text: { type: String, trim: true },          // <-- String (capital S)
-    imageUrl: { type: String },                   // optional
-    // add any other fields you actually use…
+    senderId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    receiverId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    text: { type: String, trim: true },
+    image: { type: String },
+    seen: { type: Boolean, default: false },
   },
-  { timestamps: true }                            // createdAt/updatedAt auto
+  { timestamps: true }
 );
 
 export default mongoose.model("Message", messageSchema);

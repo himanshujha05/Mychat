@@ -17,16 +17,25 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const { data } = await axios.get("/api/auth/check"); // Authorization header already set
+      const { data } = await axios.get("/api/auth/check");
       if (data?.success) {
         setAuthUser(data.userData);
         connectSocket(data.userData);
+      } else {
+        // Token invalid, clear it
+        localStorage.removeItem("token");
+        setToken(null);
+        setAuthUser(null);
+        delete axios.defaults.headers.common["Authorization"];
       }
-    } catch {
-      // If token is bad/expired, clear it quietly (avoids repeated toast spam)
-      await logout();
-      // optional toast:
-      // toast.error("Session expired. Please login again.");
+    } catch (error) {
+      // If 401 or token expired, clear auth state
+      if (error?.response?.status === 401) {
+        localStorage.removeItem("token");
+        setToken(null);
+        setAuthUser(null);
+        delete axios.defaults.headers.common["Authorization"];
+      }
     }
   };
 
@@ -45,8 +54,9 @@ export const AuthProvider = ({ children }) => {
       }
       toast.error(data?.message || "Login failed.");
       return false;
-    } catch {
-      toast.error("Login failed. Please try again.");
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error(error?.response?.data?.message || "Login failed. Please try again.");
       return false;
     }
   };
@@ -104,6 +114,7 @@ export const AuthProvider = ({ children }) => {
     axios,
     token,
     authUser,
+    onlineUser: onlineUsers,
     onlineUsers,
     socket,
     login,
