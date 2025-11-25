@@ -16,3 +16,10 @@ cd user && npm i && npm run dev
 npm run build
 ```
 # HimanChat - Real-time Messenger App
+
+## Features
+- Real-time messaging with Socket.IO
+- Typing indicators
+- Online/offline status
+- Profile management
+- Image sharing
